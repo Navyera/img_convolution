@@ -1,5 +1,6 @@
 .idea/*
 cmake-build-debug/*
 result.raw
+img_conv
 bin/*
 !bin/.gitinclude
