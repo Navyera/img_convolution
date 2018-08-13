@@ -1,0 +1,5 @@
+.idea/*
+cmake-build-debug/*
+result.raw
+bin/*
+!bin/.gitinclude
