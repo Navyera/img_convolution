@@ -25,7 +25,7 @@ $(TARGET) : $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET) $(LIBS)
 
 bin/%.o : src/%.c $(DEPS)
-	$(CC) -c $(CFLAGS) -I $(INCL_DIR) $< -o $@
+	$(CC) -c $(CFLAGS) -I $(INCL_DIR) $< -o $@ -D FILTER=$(filter)
 
 clean:
 	rm -f $(OBJ)

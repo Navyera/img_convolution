@@ -1,8 +1,6 @@
 #ifndef FILTERS_H
 #define FILTERS_H
 
-#define FILTER blur
-
 float identity[3][3] = {{0, 0, 0},
                         {0, 1, 0},
                         {0, 0, 0}};
