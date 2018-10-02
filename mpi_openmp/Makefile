@@ -18,6 +18,8 @@ CFILES = main.c\
 
 DEPS = ./include/*.h
 
+filter = identity
+
 SRC = $(addprefix $(SRCDIR), $(CFILES))
 OBJ = $(addprefix $(BINDIR), $(CFILES:.c=.o))
 

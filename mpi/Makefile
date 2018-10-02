@@ -16,6 +16,8 @@ CFILES = main.c\
          work.c\
          io.c
 
+filter = identity
+
 DEPS = ./include/*.h
 
 SRC = $(addprefix $(SRCDIR), $(CFILES))
