@@ -1,5 +1,6 @@
 #include <time.h>
 #include <mpi.h>
+#include <stdio.h>
 
 #include "work.h"
 #include "directions.h"
@@ -9,7 +10,7 @@
 #include "filters.h"
 #include "convolute.h"
 
-float work(MPI_Comm cart_comm, char *old_image, char *new_image, char **result_buf, args_t *args,
+double work(MPI_Comm cart_comm, char *old_image, char *new_image, char **result_buf, args_t *args,
            NeighbourSet *neighbour, Block *myblock, unsigned int color_bytes) {
     const int local_cols = myblock->col_end - myblock->col_start;
     const int local_rows = myblock->row_end - myblock->row_start;
@@ -30,8 +31,9 @@ float work(MPI_Comm cart_comm, char *old_image, char *new_image, char **result_b
     // Arrays to store communication handlers
     MPI_Request send_requests[8];
     MPI_Request recv_requests[8];
-    
-    time_t t0 = clock();
+
+    MPI_Barrier(cart_comm);
+    double t0 = MPI_Wtime();
 
     for (int i = 0; i < args->loops; ++i) {
         // Send column vectors to left and right neighbours
@@ -108,9 +110,17 @@ float work(MPI_Comm cart_comm, char *old_image, char *new_image, char **result_b
         new_image = tmp;
     }
     
-    time_t t1 = clock();
+    double t1 = MPI_Wtime();
+
+    int myrank;
+    MPI_Comm_rank(cart_comm, &myrank);
+
+    double elapsed_time = t1 - t0;
+    double max_time;
+
+    MPI_Reduce(&elapsed_time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0, cart_comm);
 
     *result_buf = new_image;
     
-    return ((float)(t1-t0))/CLOCKS_PER_SEC;
+    return max_time;
 }

@@ -5,7 +5,7 @@
 #include "neighbours.h"
 #include "utils.h"
 
-float work(MPI_Comm cart_comm, char *old_image, char *new_image, char **result_buf, args_t *args,
+double work(MPI_Comm cart_comm, char *old_image, char *new_image, char **result_buf, args_t *args,
            NeighbourSet *neighbour, Block *myblock, unsigned int color_bytes);
 
 #endif

@@ -81,7 +81,7 @@ void convolve(char *old_image, char *new_image, color_t color, int row_from, int
     void (*apply_fun)(char*, char *, int, int, int, float[3][3]);
 
     if (color == RGB)
-        apply_fun = apply_filter_rgb_loop;
+        apply_fun = apply_filter_rgb_fast;
     else
         apply_fun = apply_filter_gray_fast;
 

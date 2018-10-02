@@ -72,9 +72,10 @@ int main(int argc, char *argv[]) {
 
     read_block(cart_comm, args.filename, old_image, &myblock, global_cols, color_bytes);
 
-    float duration =  work(cart_comm, old_image, new_image, &new_image, &args, &neighbour, &myblock, color_bytes);
+    double duration =  work(cart_comm, old_image, new_image, &new_image, &args, &neighbour, &myblock, color_bytes);
 
-    printf("Rank : %d || My time is %f\n", myrank, duration);
+    if (myrank == 0)
+        printf("Rank : %d || MAX time is %f\n", myrank, duration);
 
     write_block(cart_comm, "result.raw", new_image, &myblock, global_cols, color_bytes);
 
