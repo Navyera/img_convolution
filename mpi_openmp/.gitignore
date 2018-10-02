@@ -2,8 +2,7 @@
 cmake-build-debug/*
 result.raw
 img_conv
-mpi/.ycm_extra_config
-mpi_openmp/.ycm_extra_config
+.ycm_extra_conf.py
 images/*
 bin/*
 !bin/.gitinclude
