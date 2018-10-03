@@ -1,6 +1,7 @@
 .idea/*
 cmake-build-debug/*
 result.raw
+*.csv
 img_conv
 mpi/.ycm_extra_config
 mpi_openmp/.ycm_extra_config

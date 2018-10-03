@@ -1,9 +1,12 @@
 #!/bin/bash
 
-if [[ $@ < 1 ]] || ! [ "$1" -eq "$1" ] 2>/dev/null; then
-    echo "Usage : ./run.sh num_procs prog_args"
-    
-    exit 1
+
+if (( $# < 2 )); then
+	echo "Usage : ./run.sh machine_file prog_args"
+	exit 1
 fi
 
-mpiexec -n $1 ./img_conv ${@:2}
+machine_file=$1
+prog_args=${@:2}
+
+mpiexec -f $machine_file ./img_conv $prog_args
