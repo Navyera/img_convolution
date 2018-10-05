@@ -1,31 +1,26 @@
 #!/bin/bash
 
 
-if (( $# != 4 )); then
+if (( $# != 6 )); then
 	echo "Bad number of arguments supplied..."
 	exit 1
 fi
 
-input_file=$(realpath $1)
+width=$1
+height=$2
+color=$3
+proc_limit=$4
+procs_per_machine=$5
+subdir=$6
 
-file_metadata=$(echo $1 | rev | cut -d "." -f 2 | rev)
-proc_limit=$2
-procs_per_machine=$3
-subdir=$4
 
 LOOPS=30 #CHANGE THIS IF NEEDED
 
-color=$(echo $file_metadata | cut -d "_" -f 2)
-color=${color^^}
-
-width=$(echo $file_metadata | cut -d "_" -f 3)
-height=$(echo $file_metadata | cut -d "_" -f 4)
-
-prog_args="-f "$input_file" -w "$width" -h "$height" -c "$color" -l "$LOOPS
-
-output_filename="results.csv"
 
 
+prog_args="-w "$width" -h "$height" -c "$color" -l "$LOOPS
+
+times=""
 
 for (( i=1; i*i <= proc_limit; i++ )); do
     bash machines.sh $((i*i)) $procs_per_machine
