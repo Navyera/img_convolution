@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
     if (myrank == 0)
         printf("Rank : %d || MAX time is %f\n", myrank, duration);
 
-    write_block(cart_comm, "result.raw", new_image, &myblock, global_cols, color_bytes);
+    //write_block(cart_comm, "result.raw", new_image, &myblock, global_cols, color_bytes);
 
     MPI_Finalize();
 

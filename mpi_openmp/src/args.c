@@ -11,29 +11,19 @@ void print_usage() {
 }
 
 int parse_args(int argc, char *argv[], args_t *ret, int myrank) {
-    if (argc != 11)
+    if (argc != 9)
         return -1;
 
     int option;
     char *end;
 
-    char f_read = 0;
     char w_read = 0;
     char h_read = 0;
     char c_read = 0;
     char l_read = 0;
 
-    while ((option = getopt(argc, argv, "f:w:h:c:l:")) != -1){
+    while ((option = getopt(argc, argv, "w:h:c:l:")) != -1){
         switch (option){
-            case 'f':
-                if (f_read)
-                    IF_MASTER_ERR(myrank, DUPLICATE_ERR("filename"))
-
-                f_read = 1;
-
-                ret->filename = optarg;
-                break;
-
             case 'w':
                 if (w_read)
                     IF_MASTER_ERR(myrank, DUPLICATE_ERR("width"))
