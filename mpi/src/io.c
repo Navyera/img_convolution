@@ -7,12 +7,9 @@
 void read_block(MPI_Comm cart_comm, char *filename, char *old_image, Block *myblock, int global_cols, unsigned int color_bytes) {
     const int local_cols = myblock->col_end - myblock->col_start;
     const int local_rows = myblock->row_end - myblock->row_start;
-    
-    for (int i = 0; i < local_rows; ++i) {
-        for (int j = 0; j < local_cols; ++j) {
-            old_image[color_bytes * LOCAL_OFFSET(i, j, local_cols)] = rand();
-        }
-    }
+
+    for (unsigned int i = 0; i < (local_cols + 2) * (local_rows + 2) * color_bytes; ++i)
+            old_image[i] = rand() % 256;
 }
 
 void write_block(MPI_Comm cart_comm, char *filename, char *new_image, Block *myblock, int global_cols, unsigned int color_bytes) {
