@@ -7,7 +7,7 @@
 #include "utils.h"
 
 void print_usage() {
-    printf("Usage : mpiexec -n <n_procs> img_conv -f <filename> -w <width> -h <height> -c <color_type> -l <n_loops>\n");
+    printf("Usage : ./img_conv -w <width> -h <height> -c <color_type> -l <n_loops>\n");
 }
 
 int parse_args(int argc, char *argv[], args_t *ret, int myrank) {

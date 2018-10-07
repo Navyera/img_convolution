@@ -19,6 +19,13 @@ rem=$(( procs % procs_per_machine ))
 
 for element in $(seq -w 01 $computers); do
     num="10#"$element
+
+    #REMOVE THESE
+    if (( num == 21)); then 
+        continue
+    fi
+    #REMOVE ABOVE
+
     if (( num == computers && rem != 0)); then
         echo "linux"$element":"$rem >> $filename
     else 
@@ -26,4 +33,13 @@ for element in $(seq -w 01 $computers); do
     fi
 done
 
-echo "Created $filename!"
+
+#REMOVE THESE 
+if (( computers == 21 )); then
+    echo "linux"$((computers+1))":"$rem >> $filename
+elif (( computers > 21 )); then
+    echo "linux"$((computers+1))":"$procs_per_machine >> $filename
+fi
+#REMOVE ABOVE
+
+#echo "Created $filename!"

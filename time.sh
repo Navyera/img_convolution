@@ -17,33 +17,37 @@ subdir=$6
 LOOPS=30 #CHANGE THIS IF NEEDED
 
 
-
 prog_args="-w "$width" -h "$height" -c "$color" -l "$LOOPS
 
 times=""
+
 
 for (( i=1; i*i <= proc_limit; i++ )); do
     bash machines.sh $((i*i)) $procs_per_machine
 
 	cd $subdir
 
-	time=$(bash run.sh ../machines$((i*i))-$procs_per_machine $prog_args | cut -d ' ' -f 8)
+	sum=0
+	for (( j=0; j<5; j++ )); do  #CHANGE THIS FOR LOOP TO GET MORE ACCURATE AVERAGES
+		temp=$(bash run.sh ../machines$((i*i))-$procs_per_machine $prog_args)
+		sum=$( echo "$sum + $temp" | bc -l | awk '{printf "%.6f\n", $0}' )
+	done
+
+	time=$(echo "$sum / 5" | bc -l | awk '{printf "%.6f\n", $0}' )
 
 	if (( (i+1)*(i+1) > proc_limit )); then
-		echo -n $time >> $output_filename
+		times+=$time
 	else
-		echo -n $time", " >> $output_filename 
+		times+=$time", "
 	fi
 	cd ..
 done
 
-echo "" >> $subdir/$output_filename
-mv $subdir/$output_filename .
-
 rm -f machines*-*
 
 
-#echo $input_file $color $width $height $proc_limit
+echo $times
+
 
 
 
