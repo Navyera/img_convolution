@@ -1,8 +1,8 @@
 #include "pixel.h"
 #include "utils.h"
 #include "args.h"
+#include <omp.h>
 
-//
 
 void apply_filter_rgb_fast(char *pxl, char *dest, int i, int j, int width, float filter[3][3]) {
     // Cast parameters, so the address is indexed properly
@@ -85,6 +85,7 @@ void convolve(char *old_image, char *new_image, color_t color, int row_from, int
     else
         apply_fun = apply_filter_gray_fast;
 
+    #pragma omp parallel for collapse(2)
     for (int i = row_from; i < row_to; ++i)
         for (int j = col_from; j < col_to; ++j)
             apply_fun(old_image, new_image, i, j, width, filter);

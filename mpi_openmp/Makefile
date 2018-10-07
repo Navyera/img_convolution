@@ -1,5 +1,5 @@
 CC        = mpicc
-LIBS      = -lm
+LIBS      = -lm -fopenmp
 CFLAGS    = -O2 -Wall
 
 TARGET = img_conv
@@ -27,7 +27,7 @@ $(TARGET) : $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET) $(LIBS)
 
 bin/%.o : src/%.c $(DEPS)
-	$(CC) -c $(CFLAGS) -I $(INCL_DIR) $< -o $@ -D FILTER=$(filter)
+	$(CC) -c $(CFLAGS) -I $(INCL_DIR) $< -o $@ -D FILTER=$(filter) $(LIBS)
 
 clean:
 	rm -f $(OBJ)
