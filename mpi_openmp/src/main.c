@@ -64,11 +64,14 @@ int main(int argc, char *argv[]) {
     const unsigned int color_bytes = args.color;
 
     char *old_image, *new_image;
+    char *old_ptr, *new_ptr;
     if (allocate_memory(&old_image, &new_image, local_rows, local_cols, color_bytes) < 0) {
         MPI_Abort(cart_comm, EXIT_FAILURE);
 
         return EXIT_FAILURE;
     }
+    old_ptr = old_image;
+    new_ptr = new_image;
 
     read_block(cart_comm, args.filename, old_image, &myblock, global_cols, color_bytes);
 
@@ -79,6 +82,8 @@ int main(int argc, char *argv[]) {
 
     write_block(cart_comm, "result.raw", new_image, &myblock, global_cols, color_bytes);
 
+    free(old_ptr);
+    free(new_ptr);
     MPI_Finalize();
 
     return EXIT_SUCCESS;
